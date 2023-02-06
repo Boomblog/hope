@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			body{
+				padding: 0;
+				margin: 0;
+				text-align: center;
+			}
+			img{
+				height: 90%;
+				width: 90%;
+			}
+			.a1{
+				/* display: flex;
+				justify-content: baseline; */
+				background-color: rgba(255, 0, 0, 0.1);
+				width: 100vw;
+				height: 100vh;
+			}
+			.b1{
+				/* display: flex;
+				justify-content: ; */
+				width: 100vw;
+				height: 10vh;
+				background-color: rgba(255, 255, 0, 0.1);
+			}
+			.b2{
+				width: 100vw;
+				height: 90vh;
+				background-color: rgba(0, 255, 255, 0.1);
+				display: flex;
+				justify-content: flex-start;
+			}
+			.b2-1{
+				width: 70vw;
+				height: 90vh;
+				background-color: rgba(255,0, 255, 0.1);
+			}
+			.b2-1-1{
+				
+			}
+			.b2-2{
+				width: 30vw;
+				height: 90vh;
+				background-color: rgba(255, 255, 255, 0.1);
+			}
+			.b2-2-1{
+				width: 30vw;
+				height: 60vh;
+			}
+			.b2-2-2{
+				width: 30vw;
+				height: 15vh;
+				background-color: rgba(0, 255, 0, 0.5);
+			}
+			.b2-2-3{
+				width: 30vw;
+				height: 8vh;
+				display: flex;
+				justify-content: flex-start;
+			}
+			.b2-2-3-1{
+				background-color: rgba(0, 0, 0, 0.5);
+				width: 15vw;
+				height: 8vh;
+			}
+			.b2-2-3-2{
+				background-color: rgba(0, 0, 0, 0.5);
+				width: 15vw;
+				height: 8vh;
+			}
+			
+			.b2-2-4{
+				width: 30vw;
+				height: 7vh;
+				display: flex;
+				justify-content: flex-start;
+			}
+			.b2-2-4-1{
+				background-color: rgba(128, 128, 0, 0.5);
+				width: 15vw;
+				height: 7vh;
+			}
+			.b2-2-4-2{
+				background-color: rgba(128, 128, 0, 0.5);
+				width: 15vw;
+				height: 7vh;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 整体盒 -->
+		<div class="a1">
+			<!-- 页眉 -->
+			<div class="b1">第1天</div>
+			<div class="b2">
+				<!-- 状态图 -->
+				<div class="b2-1">
+					<img id="ztt" class="ztt" src="./生长状态标准/1-1.jpg"/>
+					<div class="b2-1-1">1-1</div>
+				</div>
+				<div class="b2-2">
+					<!-- 雷达图 -->
+					<div class="b2-2-1">图</div>
+					<!-- 状态 -->
+					<div class="b2-2-2">1大湿度，预防料面干燥</div>
+					<div class="b2-2-3">
+						<div class="b2-2-3-1">上一天</div>
+						<div class="b2-2-3-2">下一天</div>
+					</div>
+					<div class="b2-2-4">
+						<div class="b2-2-4-1">上一张</div>
+						<div class="b2-2-4-2">下一张</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+		
+	</body>
+	<script src="./js/echarts.min.js"></script>
+	<script src="./js/jquery-1.12.2.js"></script>
+	<script></script>
+	<script>
+		a=1
+		b=1
+		
+		// 跳转一号图
+		
+		
+		// 上一天
+		$(".b2-2-3-1").click(function() { 
+			if(a>1){
+				a--
+				ddd='第'+a+'天'
+				console.log(ddd)
+				$(".b1").text(ddd)
+				
+			
+				$(".ztt").attr("src",function (){
+				tz="./生长状态标准/"+a+"-1.jpg"
+				console.log(tz)
+				return tz;
+				})
+				
+				$(".b2-1-1").text(a+"-1")
+				b=1
+				
+				// 拿数据并使用
+			$.getJSON('状态数据.json',function(data){
+				$('.b2-2-2').text(data[a-1])
+				
+			})
+				
+				
+			}else{alert("抱歉没有第0天");}
+		} )
+		// 下一天
+		$(".b2-2-3-2").click(function() {
+			if(a<26){
+				a++
+				ddd='第'+a+'天'
+				console.log(ddd)
+				$(".b1").text(ddd)
+				
+				$(".ztt").attr("src",function (){
+				tz="./生长状态标准/"+a+"-1.jpg"
+				console.log(tz)
+				return tz;
+				})
+				$(".b2-1-1").text(a+"-1")
+				b=1
+				
+				// 拿数据并使用
+				$.getJSON('状态数据.json',function(data){
+					$('.b2-2-2').text(data[a-1])
+					
+				})
+			}else{alert("抱歉没有第27天");}
+			
+		} )
+		
+		
+		//上一张
+		$(".b2-2-4-1").click(function() {
+			if(b>1){
+				b--
+				ttt=a+"-"+b
+				console.log(ttt)
+				
+				zttzfc="./生长状态标准/"+ttt+".jpg"
+				$(".ztt").attr("src",zttzfc)
+				$(".b2-1-1").text(ttt)
+			}else{alert("这就是第1张图");}
+		} )
+		//下一张
+		$(".b2-2-4-2").click(function() {
+			if(b<3){
+				b++
+				ttt=a+"-"+b
+				console.log(ttt)
+				
+				zttzfc="./生长状态标准/"+ttt+".jpg"
+				$(".ztt").attr("src",zttzfc)
+				$(".b2-1-1").text(ttt)
+				
+			}else{alert("抱歉最多就3张图");}
+		} )
+	</script>
+</html>
